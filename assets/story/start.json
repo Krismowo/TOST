@@ -1,0 +1,11 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Test",
+			"script": "none"
+		}
+	],
+	"roomText": "1/1/1 - 1012 \nnothing much is happening today, the cabin is all clean, all quiet... alomost too quiet?",
+	"roomTextSpeed": 0.02
+}
