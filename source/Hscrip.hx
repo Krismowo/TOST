@@ -14,14 +14,15 @@ import sys.io.File;
 class Hscrip {
 	public var parser:Parser;
 	public var interp:Interp;
-	public var tobekeptaftermovinglol
-	public function new() {
+	public function new(self:Dynamic) {
 		interp = new Interp();
 		parser = new Parser();
+		set("self", self);
+		//set();
 	}
 	
 	public function loadScript(Path:String){
-		interp.execute(parser.parseString(#if sys File.getContent#else Assets.getText#end(Path + ".hx") , "hx");
+		interp.execute(parser.parseString(#if sys File.getContent#else Assets.getText#end(Path + ".hx") , "hx"));
 	}
 	
 	public function set(variname:String, vari:Dynamic){

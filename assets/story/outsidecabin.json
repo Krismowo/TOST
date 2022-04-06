@@ -1,0 +1,10 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Kys",
+			"script": "goto kysnow"
+		}
+	],
+	"roomText": "Beside better judgement you went outside...\nseems a bit... foggy?"
+}

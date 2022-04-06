@@ -3,9 +3,12 @@
 	"choices": [
 		{
 			"choiceName": "Test",
-			"script": "none"
+			"script": "goto outsidecabin"
+		},
+		{
+			"choiceName": "Test 2",
+			"script": "goto test2"
 		}
 	],
-	"roomText": "1/1/1 - 1012 \nnothing much is happening today, the cabin is all clean, all quiet... alomost too quiet?",
-	"roomTextSpeed": 0.02
+	"roomText": "nothing much is happening today,\nthe cabin is all clean,\nall quiet...\nallmost too quiet?"
 }
