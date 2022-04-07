@@ -8,6 +8,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
+import flixel.ui.FlxBar;
 import flixel.util.FlxTimer;
 import flixel.FlxG;
 import flixel.util.FlxColor;
@@ -19,6 +20,7 @@ import lime.utils.Assets;
 import sys.io.File;
 import sys.FileSystem;
 #end
+import openfl.filters.ShaderFilter;
 using StringTools;
 
 typedef GameDataLmao = {
@@ -51,10 +53,23 @@ class PlayState extends FlxState
 	public var black = 0xFF110c22;
 	public var choices:FlxTypedGroup<FlxTypeText>;
 	public var choicemap:Map<String, String>;
-	public var left:FlxSprite;
+	public var barout:FlxSprite;
+	public var bottom:FlxSprite;
+	public var shader:ShitShader;
+	public var shadertime:Float;
+	public var lastsong = -1;
+	public var songs:Array<String> = ["Un Countable Time"];
+	public var shnoozeBar:FlxBar;
+	public var shnoozability:Float = 100;
+	public var tiredtext:FlxText;
 	override public function create():Void
 	{
 		super.create();
+		
+		FlxG.mouse.useSystemCursor = true;
+		shader = new ShitShader();
+		shader.iTime.value = [0];
+		FlxG.camera.setFilters([new ShaderFilter(shader)]);
 		if (FlxG.save.data.curroom == null){
 			FlxG.save.data.curroom = curroom;
 			FlxG.save.data.inventory = inventory;
@@ -67,47 +82,69 @@ class PlayState extends FlxState
 		buttons = new FlxTypedSpriteGroup<FlxText>();
 		add(buttons);
 		
-		var bottom = new FlxSprite(0, 0).makeGraphic(FlxG.width, Std.int(FlxG.height / 4 - 75),white);
+		bottom = new FlxSprite(0, 0).makeGraphic(FlxG.width, Std.int(FlxG.height / 4 - 95),white);
 		bottom.y = FlxG.height - bottom.height;
 		uishiz.add(bottom);
 		
 		
 		var btnoffset = 300;
 		
-		loadbtn = new FlxText(10, 0, 0, "LOAD", 40);
-		loadbtn.setFormat( "assets/fonts/" + font + ".ttf", 30, black);
+		loadbtn = new FlxText(10, 0, 0, "LOAD", 28);
+		loadbtn.setFormat( "assets/fonts/" + font + ".ttf", 28, black);
 		loadbtn.y = bottom.y + (bottom.height / 2) - (loadbtn.height / 2);
 		loadbtn.updateHitbox();
 		buttons.add(loadbtn);
 		
-		exitbtn = new FlxText(80, 0, 0, "EXIT", 40);
-		exitbtn.setFormat( "assets/fonts/" + font + ".ttf", 30, black);
+		exitbtn = new FlxText(100, 0, 0, "EXIT", 28);
+		exitbtn.setFormat( "assets/fonts/" + font + ".ttf", 28, black);
 		exitbtn.y = bottom.y + (bottom.height / 2) - (loadbtn.height / 2);
 		exitbtn.updateHitbox();
 		buttons.add(exitbtn);
 		
-		GameText = new FlxTypeText(FlxG.width / 2 - 225, 0, Std.int(FlxG.width / 2) + 225, "", 28);
-		GameText.setFormat("assets/fonts/" + font + ".ttf", 32, white);
+		GameText = new FlxTypeText(0, 0, FlxG.width - 45, "", 28);
+		GameText.setFormat("assets/fonts/" + font + ".ttf", 32, white, CENTER);
 		add(GameText);
-		GameText.resetText(loadtextshiz());
-		GameText.sounds = [];
-		GameText.sounds.push(new FlxSound().loadEmbedded("assets/sounds/TypingSound.wav", false));
-		GameText.sounds[0].volume = 0.5;
-		//GameText.sounds.push(new FlxSound().loadEmbedded("assets/sounds/TypingSound2.wav",false));
-		//GameText.sounds.push(new FlxSound().loadEmbedded("assets/sounds/TypingSound3.wav",false));
-		GameText.start(0.04, true);
-		trace(GameText.text);
 		
-		left = new FlxSprite(GameText.x, 0).makeGraphic(Std.int(FlxG.width / 2 - 225), FlxG.height, white);
-		left.x -= left.width + 5;
-		loadchoices(); 
-		//FlxG.sound.playMusic("assets/music/Inst.ogg", 0.45, true);
+		barout = new FlxSprite(FlxG.width - 50, 10).makeGraphic(35, Std.int(FlxG.height - (bottom.height + 20)), white);
+		add(barout);
+		shnoozeBar = new FlxBar(barout.x + 5, barout.y + 5, BOTTOM_TO_TOP, Std.int(barout.width - 10), Std.int(barout.height -10), this, "shnoozability", 0, 100, false);
+		shnoozeBar.createFilledBar(white, black);
+		add(shnoozeBar);
+		gotoroom(curroom);
+		tiredtext = new FlxText(barout.x, barout.y + (barout.height / 2), 20, "SLEEPLESNESS", 20);
+		tiredtext.setFormat( "assets/fonts/" + font + ".ttf", 28, white);
+		tiredtext.y -= (tiredtext.height / 2);
+		tiredtext.x -= (tiredtext.width + 5);
+		add(tiredtext);
+		GameText.width -= (tiredtext.width + 5);
+		FlxG.sound.music = new FlxSound();
 	}
 	
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
+		shadertime += 1;
+		//var funny:Float = Std.int(shadertime);
+		shader.iTime.value = [Std.int(shadertime)];	
+		if (FlxG.sound.music.playing){
+			if ((FlxG.sound.music.length / 1000) - (FlxG.sound.music.time / 1000) <= 1.5 && FlxG.sound.music.volume >= 0.75){
+				FlxG.sound.music.fadeOut(1.5);
+			}
+		}else{
+			if (Std.int(shadertime) % 200 == 0){
+				if (FlxG.random.bool(5)){
+					FlxG.sound.playMusic(Kyittz.loadAudio("assets/music/" + songs[FlxG.random.int(0, songs.length - 1,[lastsong])]), 0.75, false);
+					FlxG.sound.music.fadeIn( 1.5, 0, 0.75);
+				}
+			}
+		}
 		#if debug
+		if (FlxG.keys.justPressed.Q){
+			shnoozability += 2;
+		}
+		if (FlxG.keys.justPressed.A){
+			shnoozability -= 2;	
+		}
 		if (FlxG.keys.justPressed.TWO){
 			trace("mk restarting...");
 			openSubState(new RestartingLol());
@@ -116,37 +153,28 @@ class PlayState extends FlxState
 			FlxG.switchState(new Editor(curroom));
 		}
 		#end
-		for (i in 0...choices.length){
-			if (FlxG.mouse.overlaps(choices.members[i])){
-				if(FlxG.mouse.justPressed){
-					var checkspeshthing = [];
-					@:privateAccess{
-						checkspeshthing = choicemap.get(choices.members[i]._finalText).split(" ");
-						trace(checkspeshthing);
-					}
-					if (checkspeshthing.length < 1){
-						var script:Hscrip = new Hscrip(this);
-						script.set("goto", function(room:String){
-							curroom = room;
-							loadchoices();
-							GameText.resetText(loadtextshiz());
-							GameText.sounds = [];
-							GameText.sounds.push(new FlxSound().loadEmbedded("assets/sounds/TypingSound.wav", false));
-							GameText.sounds[0].volume = 0.5;
-							GameText.start(0.04, true);
-						});
-						script.loadScript("assets/scripts" + checkspeshthing[0]);
-					}else{
-						switch(checkspeshthing[0].trim()){
-							case "goto":
-								curroom = checkspeshthing[1].trim();
-								loadchoices();
-								GameText.resetText(loadtextshiz());
-								GameText.sounds = [];
-								GameText.sounds.push(new FlxSound().loadEmbedded("assets/sounds/TypingSound.wav", false));
-								GameText.sounds[0].volume = 0.5;
-								GameText.start(0.04, true);
-								trace(GameText.text);
+		if (choices != null ){
+			if(choices.members.length > 0){
+				for (i in 0...choices.members.length){
+					if (FlxG.mouse.justPressed && choices.members[i] != null ){
+						if (FlxG.mouse.overlaps(choices.members[i])){
+							var checkspeshthing = [];
+							@:privateAccess{
+								trace(choices.members[i]._finalText);
+								checkspeshthing = choicemap.get(choices.members[i]._finalText).split(" ");
+								trace(checkspeshthing);
+							}
+							switch(checkspeshthing[0]){
+								case "goto":
+									gotoroom(checkspeshthing[1]);
+								case "save":
+									FlxG.save.data.curroom = curroom;
+									FlxG.save.data.inventory = inventory;
+									FlxG.save.flush();
+								default:
+									var script:Hscrip = new Hscrip(this);
+									script.loadScript("assets/scripts" + checkspeshthing[0]);
+							}
 						}
 					}
 				}
@@ -172,31 +200,62 @@ class PlayState extends FlxState
 	}
 	
 	public function loadchoices(){
-		if (choices != null ) {
-			remove(choices);
-			choicemap = null;
-		}
+		remove(choices);
+		choicemap = null;
+		
 		choicemap = new Map<String, String>();
 		choices = new FlxTypedGroup<FlxTypeText>();
 		for (i in 0...DaGaem.choices.length){                                                                      
-			var text = new FlxTypeText(5, 5, Std.int(left.width), DaGaem.choices[i].choiceName, 23);
+			var text = new FlxTypeText(5, bottom.y, 0, DaGaem.choices[i].choiceName, 20);
+			text.ID = i;
+			text.y -= (text.height + 7);
 			text.setFormat("assets/fonts/" + font + ".ttf", 30, white);
-			if (i - 1 >= 0){
+			if (i - 1 > 0){
 				trace("yesh!!!!"); //if anyone sees this, my oc is 19 (nobody will need this info lmfao)
-				text.y = (choices.members[i - 1].y + choices.members[i - 1].height) + 5;
+				text.x = (choices.members[i - 1].x + choices.members[i - 1].width) + 5;
 			}
 			text.resetText(DaGaem.choices[i].choiceName);
-			text.start(0.2, true);
-			choicemap.set(DaGaem.choices[i].choiceName, DaGaem.choices[i].script);
+			text.start(0.00000000001, true);
+			@:privateAccess{
+				choicemap.set(text._finalText, DaGaem.choices[i].script);
+			}
 			choices.add(text);
 		}
 		add(choices);
 	}
 	
-	public function loadtextshiz(){
+	public function gotoroom(room:String){
+		if(choices != null){
+			for (i in choices.members){
+				i.visible = false;
+			}
+		}
+		curroom = room;
+		//choices = null;
+		loadRoom();
+		GameText.resetText(DaGaem.roomText);
+		GameText.sounds = [];
+		GameText.sounds.push(new FlxSound().loadEmbedded(Kyittz.loadAudio("assets/sounds/TypingSound", "wav"), false));
+		GameText.sounds[0].volume = 0.15;
+		GameText.start(0.056, true); 
+		GameText.completeCallback = function(){
+			loadchoices();
+			choices.members[choices.members.length - 1].completeCallback = function(){
+				for (i in 0...choices.members.length){
+					choices.members[i].visible = true;
+					if(i > 0)
+						choices.members[i].x = (choices.members[i - 1].x + choices.members[i - 1].width) + 12;
+				}
+				for (i in choices.members){
+					i.start(0.04, true);
+				}
+			}
+		}
+	}
+	
+	public function loadRoom(){
 		var rawjson = #if sys File.getContent#else Assets.getText#end ("assets/story/" + curroom + ".json");
 		var cookedjson:GameDataLmao = cast Json.parse(rawjson); 
 		DaGaem = cookedjson;
-		return cookedjson.roomText;
 	}
 }

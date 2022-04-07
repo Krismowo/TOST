@@ -14,13 +14,13 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 	
 	<!--These window settings apply to all targets-->
-	<window width="740" height="580" fps="60" background="#060119" hardware="true" vsync="false" />
+	<window width="740" height="580" fps="60" background="#110c22" hardware="true" vsync="false" resizable="false"/>
 	
 	<!--HTML5-specific-->
 	<window if="html5" resizable="false" />
 	
 	<!--Desktop-specific-->
-	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
+	<window if="desktop" orientation="landscape" fullscreen="false" />
 	
 	<!--Mobile-specific-->
 	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" />
@@ -30,7 +30,8 @@
 	<set name="BUILD_DIR" value="debug/export" if="debug" />
 	<set name="BUILD_DIR" value="release/export" unless="debug" />
 	<classpath name="source" />
-	<assets path="assets" />
+	<assets path="assets" exclude="*.ogg" if="html5" />
+	<assets path="assets" exclude="*.mp3" if="desktop" />
 	
 	
 	<!-- _______________________________ Libraries ______________________________ -->

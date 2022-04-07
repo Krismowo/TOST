@@ -18,7 +18,6 @@ class Hscrip {
 		interp = new Interp();
 		parser = new Parser();
 		set("self", self);
-		//set();
 	}
 	
 	public function loadScript(Path:String){
@@ -29,9 +28,16 @@ class Hscrip {
 		interp.variables.set(variname, vari);
 	}
 	
+	public function get(variname:String){
+		if (interp.variables.exists(variname)){
+			return interp.variables.get(variname);
+		}
+		return null;
+	}
+	
 	public function loadFunc(FuncName:String){
 		if (interp.variables.exists(FuncName)){
-			var func = interp.variables.get(FuncName);
+			var func = get(FuncName);
 			func();
 		}
 	}

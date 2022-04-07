@@ -2,13 +2,13 @@
 	"roomItems" : [],
 	"choices": [
 		{
-			"choiceName": "Test",
+			"choiceName": "Go Outside",
 			"script": "goto outsidecabin"
 		},
 		{
-			"choiceName": "Test 2",
-			"script": "goto test2"
+			"choiceName": "Go Else Where",
+			"script": "goto outsidecabin"
 		}
 	],
-	"roomText": "nothing much is happening today,\nthe cabin is all clean,\nall quiet...\nallmost too quiet?"
+	"roomText": "nothing much is happening today,\nthe cabin is all clean,\nall quiet...\nallmost too quiet?\n no matter all that it's so nice and calm in here..."
 }
