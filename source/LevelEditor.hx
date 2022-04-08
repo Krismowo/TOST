@@ -46,6 +46,7 @@ class LevelEditor extends FlxState {
     public var curChoiceName:String;
     public var curChoiceScript:String;
     public var curChoice:ChoiceItem;
+	public var choiceint:Int = 0;
 
     private static inline var WHITE:Int = 0xFFa1f697;
     private static inline var BLACK:Int = 0xFF110c22;
@@ -101,6 +102,23 @@ class LevelEditor extends FlxState {
         // caret.x = textInput.x + textInput.width + 8;
         // caret.y = textInput.y;
         
+		if (FlxG.keys.justPressed.O && !focused && !scriptInput.hasFocus && !choiceNameInput.hasFocus){
+			choiceint += 1;
+			if (data[index].choices.length < choiceint){
+				choiceint = data[index].choices.length;
+			}
+			choiceNameInput.text = data[index].choices[choiceint].choiceName;
+			scriptInput.text = data[index].choices[choiceint].script;
+		}
+		if (FlxG.keys.justPressed.L && !focused && !scriptInput.hasFocus && !choiceNameInput.hasFocus){
+			choiceint -= 1;
+			if (0 > choiceint){
+				choiceint = 0;
+			}
+			choiceNameInput.text = data[index].choices[choiceint].choiceName;
+			scriptInput.text = data[index].choices[choiceint].script;
+		}
+		
         curText = textInput.text;
         curChoiceName = choiceNameInput.text;
         curChoiceScript = scriptInput.text;
@@ -180,6 +198,7 @@ class LevelEditor extends FlxState {
 
         var savebutton = new FlxButton(FlxG.width - 180, FlxG.height - 60, "Save", () -> {save('PutNameHere');});
         var loadbutton = new FlxButton(savebutton.x + 100, savebutton.y, "Load", load);
+		
 
         uadd(savebutton);
         uadd(loadbutton);
@@ -194,26 +213,30 @@ class LevelEditor extends FlxState {
         uadd(border);
         uadd(textShitBG);
         textInput = new FlxText(textShitBG.x + 15, textShitBG.y + 15, textShitBG.width - 30, "", 16);
-
+		
         textInput.color = FlxColor.BLACK;
         uadd(textInput);
-
-    
+		
+		
         var shitte = new FlxText(choiceNameInput.x, choiceNameInput.y - 20, 0, "Choice", 16);
-
+		
         var troling = new FlxText(scriptInput.x, scriptInput.y - 20, "Script", 16);
-
+		
         uadd(shitte);
-    uadd(troling);
-
+		uadd(troling);
+		
         var vSpace = 45;
 
         addButton = new FlxButtonPlus(choiceNameInput.x, choiceNameInput.y + vSpace, null, "Add", 150);
 
         var cool = new FlxButtonPlus(scriptInput.x, scriptInput.y + vSpace, null, "AddChoice", 150);
-
-
-        removeButton = new FlxButtonPlus(cool.x+cool.width+30, scriptInput.y + vSpace, null, "Remove", 150); // fx position
+		
+        removeButton = new FlxButtonPlus(cool.x + cool.width + 30, scriptInput.y + vSpace, null, "Remove", 150); // fx position
+		
+		var notcool = new FlxButtonPlus(removeButton.x + removeButton.width + 30, scriptInput.y, function(){
+			data[index].choices[choiceint] = {choiceName: choiceNameInput.text, script: scriptInput.text};
+		}, "SetChoice");
+		uadd(notcool);
         addButton.onClickCallback = function() {
             trace('addine');
             addItem({
@@ -367,7 +390,6 @@ class LevelEditor extends FlxState {
         var fr:FileReference = cast(e.target, FileReference);
         fr.addEventListener(Event.COMPLETE, onComplete);
         fr.load(); // YOU FROGOT TBISFUNCTION DUMMY
-        trace(fr.data, fr.name);
     }
 
     function onComplete(e:Event) {
