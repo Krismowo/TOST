@@ -16,7 +16,7 @@ class TitleState extends FlxState {
 	override public function create():Void
 	{
 		super.create();
-		FlxG.save.bind("TOST", "Kitty");
+		FlxG.save.bind("Jals", "Kitty");
 		FlxG.mouse.useSystemCursor = true;
 		FlxG.switchState(new PlayState());
 	}

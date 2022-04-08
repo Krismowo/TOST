@@ -15,7 +15,7 @@ class RestartingLol extends FlxSubState {
 	var tweentimer:Float = 30;
 	public function new() {
 		super(FlxColor.TRANSPARENT);
-		bgshizz = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xFF000035);
+		bgshizz = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xFF110c22);
 		bgshizz.alpha = 0;
 		add(bgshizz);
 	}

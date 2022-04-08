@@ -1,4 +1,5 @@
 package;
+import flixel.util.FlxTimer;
 import hscript.Interp;
 import hscript.Parser;
 import lime.utils.Assets;
@@ -18,6 +19,11 @@ class Hscrip {
 		interp = new Interp();
 		parser = new Parser();
 		set("self", self);
+		set("Timer", Timer);
+	}
+	
+	public function Timer(Time:Int, callback:Dynamic){
+		new FlxTimer().start(Time, callback);
 	}
 	
 	public function loadScript(Path:String){

@@ -1,0 +1,18 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Outside",
+			"script": "GoOutsideCabin"
+		},
+		{
+			"choiceName": "Put On Jacket",
+			"script": "PutOnJacket"
+		},
+		{
+			"choiceName": "Go To Sleep",
+			"script": "Sleep_In_A_Bed"
+		}
+	],
+	"roomText": "nothing much is happening today,\nthe cabin is all clean,\nall quiet...\nmaybe too quiet?\nno matter all that as\nit's so nice and calm in here..."
+}

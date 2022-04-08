@@ -1,0 +1,10 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Back Inside",
+			"script": "goto start"
+		}
+	],
+	"roomText": "beside better judgement you went outside without a jacket...\nseems to be snowing quite a bit...?\nmeh, still nice and calm, though you might wanna get on a coat though..."
+}

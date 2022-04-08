@@ -62,6 +62,8 @@ class PlayState extends FlxState
 	public var shnoozeBar:FlxBar;
 	public var shnoozability:Float = 100;
 	public var tiredtext:FlxText;
+	public var carlocation = "";
+	public var day:Int = 1;
 	override public function create():Void
 	{
 		super.create();
@@ -70,11 +72,7 @@ class PlayState extends FlxState
 		shader = new ShitShader();
 		shader.iTime.value = [0];
 		FlxG.camera.setFilters([new ShaderFilter(shader)]);
-		if (FlxG.save.data.curroom == null){
-			FlxG.save.data.curroom = curroom;
-			FlxG.save.data.inventory = inventory;
-			FlxG.save.flush();
-		}
+		
 		set_bgColor(black);
 		uishiz = new FlxTypedSpriteGroup<FlxSprite>();
 		add(uishiz);
@@ -110,7 +108,9 @@ class PlayState extends FlxState
 		shnoozeBar = new FlxBar(barout.x + 5, barout.y + 5, BOTTOM_TO_TOP, Std.int(barout.width - 10), Std.int(barout.height -10), this, "shnoozability", 0, 100, false);
 		shnoozeBar.createFilledBar(white, black);
 		add(shnoozeBar);
-		gotoroom(curroom);
+		
+		loadgame();
+		trace(shnoozability);
 		tiredtext = new FlxText(barout.x, barout.y + (barout.height / 2), 20, "SLEEPLESNESS", 20);
 		tiredtext.setFormat( "assets/fonts/" + font + ".ttf", 28, white);
 		tiredtext.y -= (tiredtext.height / 2);
@@ -124,6 +124,9 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 		shadertime += 1;
+		if (shnoozability < 1){
+			openSubState(new RestartingLol());
+		}
 		//var funny:Float = Std.int(shadertime);
 		shader.iTime.value = [Std.int(shadertime)];	
 		if (FlxG.sound.music.playing){
@@ -131,8 +134,8 @@ class PlayState extends FlxState
 				FlxG.sound.music.fadeOut(1.5);
 			}
 		}else{
-			if (Std.int(shadertime) % 200 == 0){
-				if (FlxG.random.bool(5)){
+			if (Std.int(shadertime) % 1000 == 0){
+				if (FlxG.random.bool(1)){
 					FlxG.sound.playMusic(Kyittz.loadAudio("assets/music/" + songs[FlxG.random.int(0, songs.length - 1,[lastsong])]), 0.75, false);
 					FlxG.sound.music.fadeIn( 1.5, 0, 0.75);
 				}
@@ -152,12 +155,21 @@ class PlayState extends FlxState
 		if (FlxG.keys.justPressed.ONE){
 			FlxG.switchState(new Editor(curroom));
 		}
+		if (FlxG.keys.justPressed.THREE){
+			FlxG.save.data.curroom = "start";
+			FlxG.save.data.inventory = [];
+			FlxG.save.data.shnooze = 100;
+			FlxG.save.data.day = 1;
+			FlxG.save.flush();
+			loadgame();
+		}
 		#end
 		if (choices != null ){
 			if(choices.members.length > 0){
 				for (i in 0...choices.members.length){
 					if (FlxG.mouse.justPressed && choices.members[i] != null ){
 						if (FlxG.mouse.overlaps(choices.members[i])){
+							var sleeptake:Float = 0;
 							var checkspeshthing = [];
 							@:privateAccess{
 								trace(choices.members[i]._finalText);
@@ -167,13 +179,24 @@ class PlayState extends FlxState
 							switch(checkspeshthing[0]){
 								case "goto":
 									gotoroom(checkspeshthing[1]);
+									sleeptake = 2;
 								case "save":
-									FlxG.save.data.curroom = curroom;
-									FlxG.save.data.inventory = inventory;
-									FlxG.save.flush();
+									savegame();
+									sleeptake = -100;
 								default:
 									var script:Hscrip = new Hscrip(this);
-									script.loadScript("assets/scripts" + checkspeshthing[0]);
+									script.set("sleeptake", sleeptake);
+									script.set("stuffarr", checkspeshthing);
+									script.loadScript("assets/scripts/" + checkspeshthing[0]);
+									sleeptake = script.get("sleeptake");
+							}
+							if (!Math.isNaN(sleeptake)){
+								shnoozability -= sleeptake;
+							}
+							if (shnoozability > 100){
+								shnoozability = 100;
+							}else if (shnoozability < 0){
+								shnoozability = 0;
 							}
 						}
 					}
@@ -191,12 +214,54 @@ class PlayState extends FlxState
 			for (i in 0...buttons.members.length){
 				if (FlxG.mouse.overlaps(buttons.members[i])){
 					switch(buttons.members[i].text){
+						case "LOAD":
+							trace("mkmkmkmk");
+							loadgame();
+						case "EXIT":
+							FlxG.switchState(new TitleState());
 						default:
 							trace("mk");
 					}
 				}
 			}
 		}
+	}
+	
+	public function loadgame(){
+		if (FlxG.save.data.day != null){
+			day = FlxG.save.data.day;
+		}else{
+			day = 1;
+		}
+		if (FlxG.save.data.curroom != null ){
+			gotoroom(FlxG.save.data.curroom);
+		}else{
+			gotoroom("start");
+		}
+		if(FlxG.save.data.shnooze != null){
+			shnoozability = FlxG.save.data.shnooze;
+		}else{
+			shnoozability = 100;
+		}
+		if (FlxG.save.data.inventory != null ){
+			inventory = FlxG.save.data.inventory;
+		}else{
+			inventory = [];
+		}
+		if(FlxG.save.data.carloq != null){
+			carlocation = FlxG.save.data.carloq;
+		}else{
+			carlocation = "";
+		}
+	}
+	
+	public function savegame(){
+		FlxG.save.data.curroom = curroom;
+		FlxG.save.data.inventory = inventory;
+		FlxG.save.data.shnooze = shnoozability;
+		FlxG.save.data.carloq = carlocation;
+		FlxG.save.data.day = day;
+		FlxG.save.flush();
 	}
 	
 	public function loadchoices(){
@@ -231,12 +296,11 @@ class PlayState extends FlxState
 			}
 		}
 		curroom = room;
-		//choices = null;
 		loadRoom();
-		GameText.resetText(DaGaem.roomText);
 		GameText.sounds = [];
 		GameText.sounds.push(new FlxSound().loadEmbedded(Kyittz.loadAudio("assets/sounds/TypingSound", "wav"), false));
 		GameText.sounds[0].volume = 0.15;
+		GameText.resetText(DaGaem.roomText);
 		GameText.start(0.056, true); 
 		GameText.completeCallback = function(){
 			loadchoices();
@@ -254,7 +318,7 @@ class PlayState extends FlxState
 	}
 	
 	public function loadRoom(){
-		var rawjson = #if sys File.getContent#else Assets.getText#end ("assets/story/" + curroom + ".json");
+		var rawjson = #if sys File.getContent#else Assets.getText#end ("assets/story/day" + day + "/" + curroom + ".json");
 		var cookedjson:GameDataLmao = cast Json.parse(rawjson); 
 		DaGaem = cookedjson;
 	}
