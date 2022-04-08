@@ -35,7 +35,6 @@ typedef DialogueItem = {
     var roomItems:Array<Dynamic>;
     var choices:Array<ChoiceItem>;
     var roomText:String;
-    var roomTextSpeed:Float;
 }
 
 class LevelEditor extends FlxState {
@@ -225,8 +224,7 @@ class LevelEditor extends FlxState {
                     choiceName: curChoiceName,
                     script: curChoiceScript
                 }],
-                roomText: curText,
-                roomTextSpeed: 0.04
+                roomText: curText
             });
             updateDialogueList();
         }
