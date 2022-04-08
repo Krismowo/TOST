@@ -58,7 +58,7 @@ class PlayState extends FlxState
 	public var shader:ShitShader;
 	public var shadertime:Float;
 	public var lastsong = -1;
-	public var songs:Array<String> = ["Un Countable Time"];
+	public var songs:Array<String> = ["Un Countable Time", "Goodnight"];
 	public var shnoozeBar:FlxBar;
 	public var shnoozability:Float = 100;
 	public var tiredtext:FlxText;
@@ -128,7 +128,7 @@ class PlayState extends FlxState
 			openSubState(new RestartingLol());
 		}
 		//var funny:Float = Std.int(shadertime);
-		shader.iTime.value = [Std.int(shadertime)];	
+		shader.iTime.value = [Std.int(shadertime % 3)];	
 		if (FlxG.sound.music.playing){
 			if ((FlxG.sound.music.length / 1000) - (FlxG.sound.music.time / 1000) <= 1.5 && FlxG.sound.music.volume >= 0.75){
 				FlxG.sound.music.fadeOut(1.5);
