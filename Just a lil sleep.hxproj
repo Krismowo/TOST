@@ -24,15 +24,16 @@
     <class path="E:\HaxeShitUwU\haxe\lib\hscript\2,4,0" />
     <class path="E:\HaxeShitUwU\haxe\lib\texter\1,1,5\src" />
     <class path="source" />
+    <class path="debug\export\html5\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=4.11.0&#xA;openfl=9.1.0&#xA;lime=7.9.0&#xA;flixel-addons=2.11.0&#xA;djFlixel=0.4.2&#xA;flixel-ui=2.4.0&#xA;hscript=2.4.0&#xA;texter=1.1.5&#xA;next&#xA;ANDROID_SETUP=true&#xA;ANDROID_NDK_ROOT=&#xA;howlerjs&#xA;lime-webgl&#xA;lime-dom&#xA;lime-howlerjs&#xA;lime-html5&#xA;openfl-disable-handle-error&#xA;FLX_NO_FOCUS_LOST_SCREEN&#xA;tools=7.9.0&#xA;ANDROID_SDK=&#xA;lime-canvas&#xA;no-compilation&#xA;openfl-html5&#xA;FLX_NO_TOUCH&#xA;FLX_NO_SOUND_TRAY&#xA;JAVA_HOME=&#xA;DJFLX_VER=0.4.2&#xA;html5&#xA;web&#xA;html" />
+    <option directives="flixel=4.11.0&#xA;openfl=9.1.0&#xA;lime=7.9.0&#xA;flixel-addons=2.11.0&#xA;djFlixel=0.4.2&#xA;flixel-ui=2.4.0&#xA;hscript=2.4.0&#xA;texter=1.1.5&#xA;next&#xA;ANDROID_SETUP=true&#xA;ANDROID_NDK_ROOT=&#xA;howlerjs&#xA;lime-webgl&#xA;lime-dom&#xA;lime-howlerjs&#xA;lime-html5&#xA;openfl-disable-handle-error&#xA;FLX_NO_FOCUS_LOST_SCREEN&#xA;tools=7.9.0&#xA;ANDROID_SDK=&#xA;lime-canvas&#xA;no-compilation&#xA;openfl-html5&#xA;FLX_NO_TOUCH&#xA;FLX_NO_SOUND_TRAY&#xA;JAVA_HOME=&#xA;DJFLX_VER=0.4.2&#xA;fdb&#xA;html5&#xA;web&#xA;html5" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
-    <option additional="--macro openfl.utils._internal.ExtraParamsMacro.include()&#xA;--macro lime._internal.macros.DefineMacro.run()&#xA;--remap flash:openfl&#xA;--macro flixel.system.macros.FlxDefines.run()&#xA;--no-output " />
+    <option additional="--macro openfl.utils._internal.ExtraParamsMacro.include()&#xA;--macro lime._internal.macros.DefineMacro.run()&#xA;--remap flash:openfl&#xA;--macro flixel.system.macros.FlxDefines.run()&#xA;-debug " />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

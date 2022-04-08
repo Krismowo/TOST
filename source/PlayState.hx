@@ -105,7 +105,7 @@ class PlayState extends FlxState
 		
 		barout = new FlxSprite(FlxG.width - 50, 10).makeGraphic(35, Std.int(FlxG.height - (bottom.height + 20)), white);
 		add(barout);
-		shnoozeBar = new FlxBar(barout.x + 5, barout.y + 5, BOTTOM_TO_TOP, Std.int(barout.width - 10), Std.int(barout.height -10), this, "shnoozability", 0, 100, false);
+		shnoozeBar = new FlxBar(barout.x + 5, barout.y + 5, BOTTOM_TO_TOP, Std.int(barout.width - 10), Std.int(barout.height -10), this, "shnoozability",  0, 100 , false);
 		shnoozeBar.createFilledBar(white, black);
 		add(shnoozeBar);
 		
@@ -179,16 +179,21 @@ class PlayState extends FlxState
 							switch(checkspeshthing[0]){
 								case "goto":
 									gotoroom(checkspeshthing[1]);
-									sleeptake = 2;
-								case "save":
-									savegame();
-									sleeptake = -100;
+									sleeptake = 0.5;
+								case "PutOnJacket":
+									if (!inventory.contains("jacket")){
+										inventory.push("jacket");
+										gotoroom("Put_OnJacket_NO");
+									}else{
+										gotoroom("Put_OnJacket_AO");
+									}
 								default:
-									var script:Hscrip = new Hscrip(this);
-									script.set("sleeptake", sleeptake);
-									script.set("stuffarr", checkspeshthing);
-									script.loadScript("assets/scripts/" + checkspeshthing[0]);
-									sleeptake = script.get("sleeptake");
+									trace("oops you dont got anything that exists in there!!!");
+									//var script:Hscrip = new Hscrip(this);
+									//script.set("sleeptake", sleeptake);
+									//script.set("stuffarr", checkspeshthing);
+									//script.loadScript("assets/scripts/" + checkspeshthing[0]);
+									//sleeptake = script.get("sleeptake");
 							}
 							if (!Math.isNaN(sleeptake)){
 								shnoozability -= sleeptake;

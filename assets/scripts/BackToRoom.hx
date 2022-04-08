@@ -1,1 +1,0 @@
-self.gotoroom(self.curroom);

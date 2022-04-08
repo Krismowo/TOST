@@ -41,7 +41,7 @@
 	<haxelib name="djFlixel" />
 	<haxelib name="flixel-ui"/>
 	<haxelib name="discord_rpc" if="desktop"/>
-	<haxelib name="hscript"/>
+	<haxelib name="interpret"/>
 	<haxelib name="texter"/>
 	
 	<!--In case you want to use nape with flixel-->

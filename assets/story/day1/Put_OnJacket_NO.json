@@ -1,0 +1,10 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Back",
+			"script": "goto start"
+		}
+	],
+	"roomText": "Your Go to where Your Jacket is,\nluckily You just washed and dried it\nso its nice and warm!\njust like a soft, warm cloud on Your body!"
+}
