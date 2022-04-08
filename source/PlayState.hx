@@ -153,7 +153,7 @@ class PlayState extends FlxState
 			openSubState(new RestartingLol());
 		}
 		if (FlxG.keys.justPressed.ONE){
-			FlxG.switchState(new Editor(curroom));
+			FlxG.switchState(new LevelEditor());
 		}
 		if (FlxG.keys.justPressed.THREE){
 			FlxG.save.data.curroom = "start";

@@ -130,8 +130,6 @@ class LevelEditor extends FlxState {
             group.forEach(function(tired) {
                 if (FlxG.mouse.overlaps(tired)) {
                 index = tired.ID;
-                    trace(index);
-                    trace(data[index]);
                 updateBullshit(index);
                 }
             });
@@ -274,7 +272,6 @@ class LevelEditor extends FlxState {
             group.remove(group.members[0], true);
         }
         makeDialogueList(group);
-        trace('updating!!!!!1');
 
         for (i in 0...group.members.length) {
             group.members[i].x = 30;
@@ -306,28 +303,23 @@ class LevelEditor extends FlxState {
             var selecty = new FlxText();
             selecty.size = 20;
             group.add(selecty);
-            trace('add, $i');
         }
 
         for (i in 0...data.length) {
-            trace('makeSprite');
             if (sg != null && sg.length > 0) {
                 if (i == 0 || sg[i-1] == null) {
                     sg[i].x = 30;
                     sg[i].y = 30;
                     sg[i].text == 'Dialogue $i';
-                    trace('ini dialogue');
                 } else {
                     sg[i].x = sg[i-1].x;
                     sg[i].y = sg[i-1].y + sg[i-1].height + 15;
                     sg[i].text == 'Dialogue $i';
-                    trace('dialogueadd');
                 }
             }
         }
             for (i in 0...data.length) {
                 group.members[i].ID = i;
-                trace('idset $i');
             }
     }
 
@@ -359,12 +351,10 @@ class LevelEditor extends FlxState {
 
     function save(name:String) {
         var fr:FileReference = new FileReference();
-        fr.save(Json.stringify(data), name + ".json");
-        trace(Json.stringify(data));
+        fr.save(Json.stringify(data,"\t"), name + ".json");
     }
 
     function load() {
-        trace('initt LOAIDNG');
         var fr:FileReference = new FileReference();
         fr.addEventListener(Event.SELECT, onSelect);
         var filters:Array<FileFilter> = [
@@ -374,21 +364,17 @@ class LevelEditor extends FlxState {
     }
 
     function onSelect(e:Event) {
-        trace('SELEC SHIT');
         var fr:FileReference = cast(e.target, FileReference);
         fr.addEventListener(Event.COMPLETE, onComplete);
         fr.load(); // YOU FROGOT TBISFUNCTION DUMMY
-        trace('balls_itching');
         trace(fr.data, fr.name);
     }
 
     function onComplete(e:Event) {
-        trace('COMPLETE SHIT');
         var fr:FileReference = cast(e.target, FileReference);
         fr.removeEventListener(Event.COMPLETE, onComplete);
         index = 0;
         data = cast Json.parse(fr.data.toString());
-        trace('data: $data');
         updateDialogueList();
         updateBullshit(index);
     }

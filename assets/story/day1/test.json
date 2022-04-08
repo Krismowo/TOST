@@ -1,0 +1,16 @@
+[
+	{
+		"roomItems": [],
+		"choices": [
+			{
+				"choiceName": "",
+				"script": ""
+			},
+			{
+				"choiceName": "uwu",
+				"script": "goto start"
+			}
+		],
+		"roomText": "yooooo"
+	}
+]
