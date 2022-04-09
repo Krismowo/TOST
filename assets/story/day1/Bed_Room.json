@@ -1,0 +1,14 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Outside",
+			"script": "GoOutsideCabin"
+		},
+		{
+			"choiceName": "Put On Jacket",
+			"script": "PutOnJacket"
+		}
+	],
+	"roomText": "You Stand in the middle of Your Bedroom,\nYou wonder how your gonna get home..."
+}

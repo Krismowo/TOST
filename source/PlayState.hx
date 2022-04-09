@@ -176,10 +176,10 @@ class PlayState extends FlxState
 								checkspeshthing = choicemap.get(choices.members[i]._finalText).split(" ");
 								trace(checkspeshthing);
 							}
+							sleeptake = 0.5;
 							switch(checkspeshthing[0]){
 								case "goto":
 									gotoroom(checkspeshthing[1]);
-									sleeptake = 0.5;
 								case "PutOnJacket":
 									if (!inventory.contains("jacket")){
 										inventory.push("jacket");

@@ -1,0 +1,14 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Outside",
+			"script": "GoOutsideCabin"
+		},
+		{
+			"choiceName": "Put On Jacket",
+			"script": "PutOnJacket"
+		}
+	],
+	"roomText": "Your in the main room of the cabin,\nluckily its warm inside\nYou wanna go back home\n but Your Car is broken...\nYou might wanna go fix it as\nits a half hour walk back without it..."
+}
