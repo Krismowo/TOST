@@ -128,7 +128,12 @@ class PlayState extends FlxState
 			openSubState(new RestartingLol());
 		}
 		//var funny:Float = Std.int(shadertime);
-		shader.iTime.value = [Std.int(shadertime % 3)];	
+		shader.iTime.value = [Std.int(shadertime)];	
+		#if html5
+		if (shader.iTime.value[0] >= 100){
+			shadertime = 0;
+		}
+		#end
 		if (FlxG.sound.music.playing){
 			if ((FlxG.sound.music.length / 1000) - (FlxG.sound.music.time / 1000) <= 1.5 && FlxG.sound.music.volume >= 0.75){
 				FlxG.sound.music.fadeOut(1.5);

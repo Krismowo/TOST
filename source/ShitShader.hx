@@ -42,22 +42,19 @@ class ShitShader extends FlxShader
 	void main(){
 		vec3 col = texture2D(bitmap, openfl_TextureCoordv).rgb;
 		vec2 shit = openfl_TextureCoordv;
-		if (iTime == 0){
-			if(movlef){
+		if (iTime > 25 && iTime < 30 || iTime > 55 && iTime < 60 || iTime > 81 && iTime < 90){
+			if(iTime > 75 && iTime < 80){
 				shit.x = openfl_TextureCoordv.x;
 				shit.x += 0.0035;
 				
 			}
 			vec3 col = texture2D(bitmap, shit).rgb;
-			if(movlef){
+			if(iTime > 75 && iTime < 80){
 				col.r -= 0.012;
 				col.g -= 0.012;
 				col.b -= 0.012;
 			}
 			gl_FragColor = vec4(col.r, col.g, col.b, 0.95); //edited thing here
-			if(movlef == false){
-				movlef = true;
-			}
 		}else{
 			shit.x = openfl_TextureCoordv.x;
 			shit.x -= 0.001;

@@ -61,6 +61,10 @@ class TitleState extends FlxState {
 		var botm = new FlxSprite(0, 0).makeGraphic(FlxG.width, Std.int(FlxG.height / 7), white);
 		botm.y = FlxG.height - botm.height;
 		add(botm);
+		FlxG.sound.playMusic(Kyittz.loadAudio("assets/music/main_theme"), 1, true);
+		#if debug
+		FlxG.switchState(new PlayState());
+		#end
 	}
 	
 	override public function update(elapsed:Float){
