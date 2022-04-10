@@ -6,6 +6,10 @@
 			"script": "goto Couch"
 		},
 		{
+			"choiceName": "Go Outside",
+			"script": "checkitm jacket outside_No_Jacket outside_Jacket"
+		},
+		{
 			"choiceName": "Go To Your Bedroom",
 			"script": "goto Bed_Room"
 		}

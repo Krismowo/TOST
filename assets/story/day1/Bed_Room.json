@@ -2,12 +2,16 @@
 	"roomItems" : [],
 	"choices": [
 		{
-			"choiceName": "Go Outside",
-			"script": "GoOutsideCabin"
+			"choiceName": "Get In Bed",
+			"script": "sleep Bed"
 		},
 		{
 			"choiceName": "Put On Jacket",
 			"script": "PutOnJacket"
+		},
+		{
+			"choiceName": "Back To Living Room",
+			"script": "goto Living_Room"
 		}
 	],
 	"roomText": "You Stand in the middle of Your Bedroom,\nYou wonder how your gonna get home..."

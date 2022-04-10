@@ -6,9 +6,13 @@
 			"script": "GoOutsideCabin"
 		},
 		{
-			"choiceName": "Put On Jacket",
-			"script": "PutOnJacket"
+			"choiceName": "Sit On Couch",
+			"script": "goto Couch"
+		},
+		{
+			"choiceName": "Go To Your Bedroom",
+			"script": "goto Bed_Room"
 		}
 	],
-	"roomText": "Your in the main room of the cabin,\nluckily its warm inside\nYou wanna go back home\n but Your Car is broken...\nYou might wanna go fix it as\nits a half hour walk back without it..."
+	"roomText": "You just got home,\nluckily its warm inside\nAllthough that doest stop\nyou from being tired...\nYou begin to think if you should\nfix Your vehicle tomorrow as\nits a half hour walk back home without it...\nbut you remember how long it\nmay take to fix..."
 }

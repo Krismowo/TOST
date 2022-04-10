@@ -1,0 +1,10 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Get Out Of Bed",
+			"script": "goto Bed_Room"
+		}
+	],
+	"roomText": "You Fall asleep in your Bed...\nYou feel something saved,\nAs the next day Rises\nyou feel nice and comforted!"
+}

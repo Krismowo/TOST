@@ -1,0 +1,14 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Back Inside",
+			"script": "goto Living_Room"
+		},
+		{
+			"choiceName": "Go To BackYard",
+			"script": 	"goto Back_Yard"
+		}
+	],
+	"roomText": "Its kinda cold out here...\nluckily you got the jacket on!"
+}

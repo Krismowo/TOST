@@ -3,7 +3,11 @@
 	"choices": [
 		{
 			"choiceName": "Get Off Couch",
-			"script": "goto LivingRoom"
+			"script": "goto Living_Room"
+		},
+		{
+			"choiceName": "Check In Couch",
+			"script": "checkitm food Found_In_Couch FIC_Found"
 		}
 	],
 	"roomText": "You decide to sit on the couch,\nFeels nice and warm!"

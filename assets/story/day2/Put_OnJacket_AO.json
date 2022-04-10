@@ -1,0 +1,10 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Back",
+			"script": "goto Bed_Room"
+		}
+	],
+	"roomText": "You Go to where Your Jacket normally is\nBut You remember You allready got it on..."
+}

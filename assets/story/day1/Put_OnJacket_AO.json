@@ -3,8 +3,8 @@
 	"choices": [
 		{
 			"choiceName": "Go Back",
-			"script": "goto start"
+			"script": "goto Bed_Room"
 		}
 	],
-	"roomText": "Your Go to where Your Jacket normally is\nBut You remember You allready goto it on...\nLuckily thats the least of Your worries!"
+	"roomText": "You Go to where Your Jacket normally is\nBut You remember You allready got it on...\nLuckily thats the least of Your worries!"
 }

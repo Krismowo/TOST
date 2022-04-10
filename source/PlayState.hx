@@ -16,6 +16,7 @@ import djFlixel.gfx.FilterFader;
 import flixel.addons.text.FlxTypeText;
 import haxe.Json;
 import lime.utils.Assets;
+import flixel.addons.transition.FlxTransitionableState;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -35,7 +36,7 @@ typedef Choice = {
 	var choiceName:String;
 }
 
-class PlayState extends FlxState
+class PlayState extends FlxTransitionableState
 {
 	public var Timer:Float = 45;
 	public var timerlol:FlxTimer;
@@ -110,6 +111,7 @@ class PlayState extends FlxState
 		add(shnoozeBar);
 		
 		loadgame();
+		trace(day + " is da day");
 		trace(shnoozability);
 		tiredtext = new FlxText(barout.x, barout.y + (barout.height / 2), 20, "SLEEPLESNESS", 20);
 		tiredtext.setFormat( "assets/fonts/" + font + ".ttf", 28, white);
@@ -118,6 +120,8 @@ class PlayState extends FlxState
 		add(tiredtext);
 		GameText.width -= (tiredtext.width + 5);
 		FlxG.sound.music = new FlxSound();
+		FlxG.sound.playMusic(Kyittz.loadAudio("assets/music/" + songs[FlxG.random.int(0, songs.length - 1,[lastsong])]), 0.75, false);
+		FlxG.sound.music.fadeIn( 1.5, 0, 0.75);
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -183,6 +187,25 @@ class PlayState extends FlxState
 							}
 							sleeptake = 0.5;
 							switch(checkspeshthing[0]){
+								case "giveandgo":
+									inventory.push(checkspeshthing[1]);
+									gotoroom(checkspeshthing[2]);
+								case "gotogar":
+									if (inventory.contains("opengar")){
+										gotoroom("Garage");
+									}else{
+										if (inventory.contains("garkey")){
+											gotoroom("GarageWK");
+										}else{
+											gotoroom("GarageWOK");
+										}
+									}
+								case "checkitm":
+									if (!inventory.contains(checkspeshthing[1])){
+										gotoroom(checkspeshthing[2]);
+									}else{
+										gotoroom(checkspeshthing[3]);
+									}
 								case "goto":
 									gotoroom(checkspeshthing[1]);
 								case "PutOnJacket":
@@ -192,6 +215,14 @@ class PlayState extends FlxState
 									}else{
 										gotoroom("Put_OnJacket_AO");
 									}
+								case "sleep":
+									gotoroom(checkspeshthing[1]);
+									day += 1;
+									shnoozability = 100;
+									savegame();
+								case "getoffcouchfood":
+									inventory.push("food");
+									gotoroom(checkspeshthing[1]);
 								default:
 									trace("oops you dont got anything that exists in there!!!");
 									//var script:Hscrip = new Hscrip(this);
@@ -308,10 +339,10 @@ class PlayState extends FlxState
 		curroom = room;
 		loadRoom();
 		GameText.sounds = [];
-		GameText.sounds.push(new FlxSound().loadEmbedded(Kyittz.loadAudio("assets/sounds/TypingSound", "wav"), false));
-		GameText.sounds[0].volume = 0.15;
+		GameText.sounds.push(new FlxSound().loadEmbedded("assets/sounds/TypingSound.wav", false));
+		GameText.sounds[0].volume = 0.1;
 		GameText.resetText(DaGaem.roomText);
-		GameText.start(0.056, true); 
+		GameText.start(0.10, true); 
 		GameText.completeCallback = function(){
 			loadchoices();
 			choices.members[choices.members.length - 1].completeCallback = function(){

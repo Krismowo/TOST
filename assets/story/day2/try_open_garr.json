@@ -1,0 +1,14 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Back",
+			"script": "goto outside_Jacket"
+		},
+		{
+			"choiceName": "Try To Open",
+			"script": "goto try_open_garr"
+		}
+	],
+	"roomText": "You try to open it,\nBut the lock is too hard..."
+}

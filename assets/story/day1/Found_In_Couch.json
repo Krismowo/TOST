@@ -1,0 +1,10 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Get Off Couch",
+			"script": "getoffcouchfood Living_Room"
+		}
+	],
+	"roomText": "You Decided to check the couch\nfor any Change or something,\nYou found some food,\nLuckily it was sealed in a bag and unopened!\nmaybe all this might not be so bad..."
+}

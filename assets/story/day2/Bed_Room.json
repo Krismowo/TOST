@@ -1,0 +1,18 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Put On Jacket",
+			"script": "PutOnJacket"
+		},
+		{
+			"choiceName": "Back To Living Room",
+			"script": "goto Living_Room"
+		},
+		{
+			"choiceName": "Check Drawer",
+			"script": "checkitm garkey Drawer Draw_NoKey"
+		}
+	],
+	"roomText": "You Stand in the middle of Your Bedroom,\nJust thinking about how your gonna get home\nmakes your head hurt..."
+}

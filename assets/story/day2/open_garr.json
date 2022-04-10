@@ -1,0 +1,14 @@
+{
+	"roomItems" : [],
+	"choices": [
+		{
+			"choiceName": "Go Back",
+			"script": "giveandgo opengar Back_Yard"
+		},
+		{
+			"choiceName": "Go In",
+			"script": "giveandgo opengar Garage"
+		}
+	],
+	"roomText": "You try the key You found in the drawer,\nIt works! now the Garage is open"
+}
